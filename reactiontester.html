@@ -1,0 +1,122 @@
+<!doctype html>
+<head>
+	<title>Javascript Reaction Tester Game</title>
+	<meta charset="utf-8"/>
+	<meta http-equiv="Content-type" content="text/html"; charset="utf-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale"=1/>
+
+	<style>
+
+		#shape {
+
+		width: 250px;
+		height: 250px;
+		background-color: #b20000;
+		display:none;
+		position:relative;
+
+		}
+		
+		body {
+		
+		font-family: Tahoma;
+		text-align: center;
+		
+		}
+		
+		h2 {
+		
+		padding-bottom:30px;
+		}
+
+	</style>
+	
+</head>
+
+<body>
+
+	<h2>Reaction Game</h2>
+	
+	<p>Click on the colored shape as fast as you can!</p>
+
+	<h4>Your reaction time: <span id="time">0</span> seconds</h4>
+
+	<div id="shape"></div>
+	
+	<script>
+	
+		function randomColor() {
+		
+			var letters = '0123456789ABCDEF'.split('');
+			var color = '#';
+			for (var i = 0; i < 6; i++ ) {
+			color += letters[Math.floor(Math.random() * 16)];
+			}
+			
+			return color;
+		}
+	
+		var clickTime; var drawnTime; var reactionTime;
+	
+		function drawShape() {
+			
+			var randomTime=Math.random();
+			
+			randomTime=randomTime*5000;
+			
+			setTimeout(function() {
+				
+				if (Math.random()>0.5) {
+			
+					document.getElementById("shape").style.borderRadius="225px"; // draws a circle 
+					
+				} else {
+			
+					document.getElementById("shape").style.borderRadius="0px"; 
+					
+				} 
+				
+				var spaceTop=Math.random();
+				
+				spaceTop = spaceTop*300;
+				
+				var spaceLeft=Math.random();
+				
+				spaceLeft = spaceLeft*600;
+				
+				document.getElementById("shape").style.top=spaceTop+"px";
+				
+				document.getElementById("shape").style.left=spaceLeft+"px";
+			
+				document.getElementById("shape").style.backgroundColor=randomColor(); // picks a random color
+			
+				document.getElementById("shape").style.display="block"; // draws it
+			
+			}, randomTime);
+			
+			drawnTime=Date.now();
+			
+		}
+		
+		document.getElementById("shape").onclick=function() {
+			
+			clickTime=Date.now();
+			
+			this.style.display="none";
+			
+			reactionTime=(clickTime - drawnTime) / 1000;
+			
+			document.getElementById("time").innerHTML=reactionTime;
+			
+			drawShape();
+			
+		}
+		
+		drawShape();
+		
+		
+	</script>
+	
+</body>
+
+</html>
